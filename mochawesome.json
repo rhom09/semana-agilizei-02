@@ -1,0 +1,107 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-12-15T19:20:20.992Z",
+    "end": "2020-12-15T19:20:40.669Z",
+    "duration": 19677,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "7d985349-88ca-4ba7-9682-14b0ba66a38a",
+      "title": "",
+      "fullFile": "cypress/integration/compras.spec.js",
+      "file": "cypress/integration/compras.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ddca9772-fc50-4404-b7e4-f2ddff1f3f03",
+          "title": "Compra",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Efetuar uma compra produto",
+              "fullTitle": "Compra Efetuar uma compra produto",
+              "timedOut": null,
+              "duration": 19590,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.backgroundLogin();\ncy.visit('/');\nvar nomeProduto = 'Faded Short Sleeve T-shirts'; // Passar o mouse por cima\ncy.contains(nomeProduto).trigger('mouseover'); // Selecionar o elemento add-to-cart\ncy.contains(nomeProduto).parent() //h5\n.siblings('div.button-container').children('a').first() //add to cart\n.click(); // Validando se o produto foi add ao carrinho sucesso  \ncy.get('div.layer_cart_product h2').should('contain.text', 'Product successfully added to your shopping cart');\ncy.get('span#layer_cart_product_title').should('contain.text', nomeProduto);\ncy.get(\"div.button-container a[href$='order']\").click();\ncy.get(\".cart_navigation a[href$='order&step=1']\").click(); // cy.get('#email').type('rhom09@test.com')\n// cy.get('#passwd').type('ragnar01')\n// cy.get('button#SubmitLogin').click()\n//Validando se o endereço de entrega é igual ao de cobrança\ncy.get('[type=checkbox]#addressesAreEquals').should('have.attr', 'checked', 'checked'); // asserção | atributo | valor\ncy.get('button[name=processAddress]').click();\ncy.get('[type=checkbox]#cgv').check();\ncy.get('button[name=processCarrier]').click();\ncy.get('.bankwire').click(); //cy.get(\".cart_navigation button[type='submit']\").click()\ncy.get(\".cart_navigation button[type='submit']\").find('span').contains('I confirm my order').click();\ncy.get('.cheque-indent strong').should('contain.text', 'Your order on My Store is complete.'); // INVOKE = invoca uma função nativa do JS\n// THEN = para interagir com o texto\ncy.get('div.box').invoke('text').then(function (text) {\n  // Usa o match do JS para gerar a expressão regular(regex para filtrar o texto)\n  // Vai gerar um array e escolhemos qual texto queremos entre []\n  console.log(text.match(/[A-Z][A-Z]+/g)[1]); // Escrita de um arquivo Json com o conteudo do pedido\n  // WRITEFILE = 2 parametros(caminho do arquivo | conteudo do arquivo)\n  cy.writeFile('cypress/fixtures/pedido.json', {\n    id: \"\".concat(text.match(/[A-Z][A-Z]+/g)[1])\n  });\n});\ncy.get(\".cart_navigation a[href$='history']\").click(); // Leitura de um arquivo\ncy.readFile('cypress/fixtures/pedido.json').then(function (pedido) {\n  cy.get('tr.first_item .history_link a').should('contain.text', pedido.id); // Asserção\n});\ncy.screenshot();",
+              "err": {},
+              "uuid": "d0747d16-e1dc-4521-b01d-53251ac82629",
+              "parentUUID": "ddca9772-fc50-4404-b7e4-f2ddff1f3f03",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d0747d16-e1dc-4521-b01d-53251ac82629"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 19590,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "mochawesome-report",
+        "quiet": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.1.0"
+    }
+  }
+}
